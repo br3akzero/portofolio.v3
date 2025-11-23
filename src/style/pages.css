@@ -206,6 +206,13 @@ body {
   overflow: hidden;
 }
 
+.project-links {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
 .project-link {
   font-size: var(--fs-base);
   color: #646cff;
