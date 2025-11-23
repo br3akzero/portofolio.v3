@@ -30,13 +30,7 @@
 body {
   min-height: 100vh;
   padding: 1.5rem;
-  background-color: #0a0a0f;
-  background-image:
-    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.4) 0%, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.35) 0%, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(34, 211, 238, 0.3) 0%, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.35) 0%, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(251, 146, 60, 0.2) 0%, transparent 40%);
+  background: #000;
 }
 
 #app {
@@ -114,7 +108,16 @@ body {
   inset: 0;
   z-index: -1;
   border-radius: 32px;
-  background: rgba(255, 255, 255, 0.08);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 0, 0.06) 0%,
+    rgba(255, 154, 0, 0.06) 16%,
+    rgba(208, 222, 33, 0.06) 32%,
+    rgba(79, 220, 74, 0.06) 48%,
+    rgba(63, 218, 216, 0.06) 64%,
+    rgba(47, 107, 232, 0.06) 80%,
+    rgba(139, 92, 246, 0.06) 100%
+  );
   backdrop-filter: blur(20px) saturate(120%);
   -webkit-backdrop-filter: blur(20px) saturate(120%);
   filter: url(#glass-distortion);
