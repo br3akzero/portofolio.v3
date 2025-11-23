@@ -1,4 +1,0 @@
-# Cloudflare Pages redirects and rewrites
-
-# Clean URLs - rewrite without redirect
-/projects /projects.html 200
