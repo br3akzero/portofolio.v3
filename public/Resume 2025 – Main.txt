@@ -1,0 +1,137 @@
+﻿Daniel Reshad
+daniel.reshad@proton.me
+github.com/br3akzero
+TL;DR
+A seasoned Senior Software Engineer with 8+ years of experience building client-side applications for Web, Apple and Android platforms. Currently focused on developing developer-centric tools and products to enhance engineering productivity.
+Experience
+Senior Software Engineer (Contract)
+Wowza | 11/2022 - 07/2025
+Video Streaming – Remote, United States
+React Native SDK, Apple SDK, Wowza Video, Wowza
+* Designed a full native Video Player Apple Swift SDK that is both platform and UI agnostic. 
+* Designed and delivered a Player React Native SDK that leverages the natively built Wowza Flowplayer Player SDKs using Typescript, Kotlin and Swift. 
+* One of the core engineers of the Wowza-Flowplayer Web Player, a high-volume HTML5 video player serving over 100 million monthly views.
+* Worked on cross-platform integration between our client side services. 
+* Led code reviews and mentored the team to uphold coding best practices.
+Senior Software Engineer (Contract)
+Netz.io | 06/2024 - 10/2024
+Fintech/Defi – Remote, United Arab Emirates
+Netz.io
+* Led end-to-end client-side development of a Uniswap-inspired Web3 swap and pool platform using Next.js, Auth.js, and Web3Auth, delivering a secure and responsive user interface with dynamic authentication across browser and backend environments.
+* Integrated Web3Auth and blockchain swap/pool functionalities by designing API calls and state management logic, enabling seamless token swaps, liquidity provisioning, and real-time asset tracking for 4 core user-facing pages.
+* Architected custom UI/UX components and styling for landing, swap, pool, and asset management pages, collaborating with design and backend teams to ensure feature parity, cross-browser compatibility, and visual consistency.
+Software Engineer (Contract)
+Flowplayer | 07/2021 - 11/2022
+Online Video Platform – Remote, Sweden
+Flowplayer React, Flowplayer OVP, Flowplayer iOS, Flowplayer tvOS, Flowplayer
+* Developed interactive video components for Flowplayer's OVP using React.
+* Led refactoring to optimize bundling, enhancing performance and dev experience.
+* Contributed to the Flowplayer Native React Player package, crafting reusable components for enhanced video playback.
+* Led the transformation of the iOS SDK from monolithic to a modular Swift framework, enhancing efficiency and maintainability.
+* Resolved issues and refined the iOS SDK for uninterrupted video playback experiences.
+* Expanded SDK capabilities to include tvOS, providing developers with versatile options in the Apple ecosystem.
+Software Engineer (Contract)
+AdPro (Ceased operations) | 06/2020 - 07/2021
+E-commerce – Hybrid, Bosnia & Herzegovina
+* Led the creation of a React UI using TypeScript and Redux, streamlining online orders, inventory, and call center tasks.
+* Focused on optimal performance, refining React code to enhance speed and user responsiveness.
+* Maintained cross-browser compatibility, ensuring a uniform user experience across platforms.
+* Created microservices to help with certain features such as email notifications.
+macOS Engineer (Contract)
+Coinis | 01/2020 - 06/2020
+Ad Network – Remote, Montenegro
+* Led the development of a macOS app connecting to an ad network, curating software product suggestions based on user preferences and behavior.
+* Worked with ad network providers for seamless API and SDK integrations within the macOS application.
+* Crafted a platform-agnostic Swift analytics service to track user behavior and inform data-driven decisions.
+Mobile Team Lead (iOS & Android) (Contract)
+War Childhood Museum | 03/2019 - 07/2019
+Museum – Remote, Sarajevo
+In Cooperation with Htec
+* Spearheaded the refactoring of a native iOS and Android application used by the War Childhood Museum to narrate their story on museum tablets, ensuring a seamless and engaging user experience for visitors.
+* Collaborated with a small, cross-functional team of developers, providing technical mentorship, guidance, and fostering a collaborative environment to achieve project goals efficiently.
+* Delivered impactful results within a tight timeline by introducing new features and enhancements, significantly improving the app’s functionality and aligning it with the museum’s mission to share powerful stories of childhood during war.
+Android Engineer (Contract) 
+Kloeckner Metals | 01/2019 - 04/2019
+Metallurgy – Remote, United States
+In Cooperation with Htec
+* Led the development and maintenance of the native Android app, ensuring alignment with stakeholder requirements and delivering a seamless user experience for the construction industry.
+* Implemented a steel shape calculator feature, enabling users to input dimensions and steel specifications to receive accurate size, price, and shape results, significantly enhancing user productivity.
+* Integrated a dynamic news feed within the app, providing real-time updates from Kloeckner Metals Corporation and industry news, improving user engagement and keeping content relevant and up-to-date.
+iOS Engineer (Contract)
+KasamaKA - FINTQ (Ceased operations 2019) | 03/2018 - 01/2019
+Fintech – Remote, Philippines
+In Cooperation with Htec
+* Created a multi-bank mobile banking iOS app from scratch. 
+* Collaborated with backend teams for a scalable and fault-tolerant architecture.
+* Seamlessly integrated secure banking code for smooth user experiences.
+iOS Engineer
+Spartan Apps | 01/2017 - 01/2018
+Health & Fitness – Remote, United States
+* Helped develop the Spartan Workout App, adding fitness, diet, and account features.
+* Worked with teams to boost app functionality, following senior development guidelines.
+* Continuously updated skills in emerging iOS technologies and practices.
+Projects
+Rep Rise: Home Workout Buddy
+01/2020 - 01/2024
+iOS Fitness App
+Rep Rise on the App Store
+
+
+* Created and developed from the ground up Rep Rise, gamified fitness app.
+* Used ARKit to create a touchless repetition counting mechanism. 
+* Earned $10k+ and gained 30,000+ users worldwide.
+XcodeProjectSecurity
+11/2023 - 01/2024 
+IDE Security CLI
+gitlab.com/SwiftDevCollective
+* Contributed to the development of a security-focused tool for Xcode projects.
+* Collaborated in a team to enhance project security and code integrity.
+* Implemented features to detect and mitigate potential security vulnerabilities in Xcode projects.
+* Participated in code reviews and provided improvements to ensure high-quality, secure code.
+Open Sesame - Network Port Surveillance
+12/2023 – 01/2025
+macOS menu bar app 
+rashadatjou/open-sesame
+* Engineered a macOS application for monitoring network ports.
+* Implemented real-time alerts and logging for unauthorized port access.
+* Utilized advanced macOS programming techniques for network security.
+Google IMA SDK for iOS & tvOS
+01/2023 – 07/2025
+XCFramwork 
+rashadatjou/google-ima-sdk-xc
+* Developed an unofficial combined SDK for iOS and tvOS platforms.
+* Facilitated integration of Google IMA SDK with SPM and CocoaPods.
+* Streamlined ad integration process for iOS/tvOS app developers.
+Portfolio Website
+01/2022 - 01/2025
+Remix.run + React
+rashadatjou/portfolio
+* Designed a personal portfolio website using Remix.run.
+* Showcased professional projects, skills, and personal brand.
+* Implemented responsive design for optimal viewing on all devices.
+Themeit - Web Theme Switcher
+01/2023 - 01/2024
+Modern Web Browser Theme Switcher 
+rashadatjou/themeit
+* Created a modern, user-friendly web theme switcher.
+* Enabled dynamic theme changes for enhanced user experience.
+* Integrated with React and JS versions for widespread compatibility.
+Skills
+Technical
+Programming Languages:
+Swift, JavaScript, TypeScript, HTML5, CSS3, Kotlin (Intermediet), Objective-C (Novice),
+SQL (Basic). 
+
+
+Frameworks/Libraries: 
+React, React Native, Redux, ARKit, SwiftUI, UIKit, HTML5, CSS3,
+AppKit, CoreData, SwiftData, CloudKit, Tailwind, NextJS, Remix.run, AVKit
+AVFoundation, ShadCN, T3 Stack, XCTest, Jets.
+
+
+Tools: 
+Xcode, Git, npm/yarn, Webpack/Parcel/Bun, CocoaPods, Swift Package Manager,
+XCFramework, VSCode, CircleCI, Github Actions, Ollama, Bash/Zsh.
+Human
+* English | C1 (Fluent)
+* German | B2 (Advanced)

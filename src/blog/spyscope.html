@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introducing SpyScope | Daniel Reshad</title>
+    <meta name="description" content="SpyScope transforms your iPhone into a professional live streaming camera server, broadcasting 4K video directly to any browser on your local network." />
+    <meta name="author" content="Daniel Reshad" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://breakzero.io/blog/spyscope" />
+    <meta property="og:title" content="Introducing SpyScope | Daniel Reshad" />
+    <meta property="og:description" content="SpyScope transforms your iPhone into a professional live streaming camera server, broadcasting 4K video directly to any browser on your local network." />
+    <meta property="og:image" content="https://breakzero.io/og-image.png" />
+    <meta property="article:published_time" content="2025-11-23T00:00:00Z" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://breakzero.io/blog/spyscope" />
+    <meta name="twitter:title" content="Introducing SpyScope | Daniel Reshad" />
+    <meta name="twitter:description" content="SpyScope transforms your iPhone into a professional live streaming camera server, broadcasting 4K video directly to any browser on your local network." />
+    <meta name="twitter:image" content="https://breakzero.io/og-image.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href="https://breakzero.io/blog/spyscope" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="stylesheet" href="/style/blog.css" />
+  </head>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
+      <defs>
+        <filter id="glass-distortion" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" seed="15" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="1" result="blurred" />
+          <feDisplacementMap in="SourceGraphic" in2="blurred" scale="4" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div id="app">
+      <header class="blog-header">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+        <div class="blog-meta">
+          <time datetime="2025-11-23">November 23, 2025</time>
+          <div class="blog-tags">
+            <span class="blog-tag">iOS</span>
+            <span class="blog-tag">swift</span>
+            <span class="blog-tag">release</span>
+          </div>
+        </div>
+        <h1>Introducing SpyScope</h1>
+      </header>
+
+      <article class="blog-content">
+        <p>I'm excited to announce the release of <strong>SpyScope</strong>, a new iOS app that transforms your iPhone into a professional live streaming camera server.</p>
+
+        <div class="image-row">
+          <img src="/assets/blog.spyscope.1.jpeg" alt="SpyScope streaming from iPhone to desktop browser" />
+          <img src="/assets/blog.spyscope.2.jpeg" alt="SpyScope video quality settings up to 4K" />
+          <img src="/assets/blog.spyscope.3.jpeg" alt="SpyScope server status and local storage" />
+        </div>
+
+        <h2>The Problem</h2>
+
+        <p>Setting up a reliable video stream shouldn't require expensive equipment, complex server configurations, or trusting third-party cloud services with your footage. Whether you need a quick security camera, a baby monitor, or a secondary camera angle for content creation, the existing solutions are either overpriced, privacy-invasive, or unnecessarily complicated.</p>
+
+        <h2>The Solution</h2>
+
+        <p>SpyScope takes a different approach. It turns any iPhone into a high-quality streaming server that broadcasts directly to browsers on your local network. No cloud. No accounts. No subscriptions.</p>
+
+        <p>Key features include:</p>
+
+        <ul>
+          <li><strong>4K HLS Streaming</strong> — Broadcast crystal-clear video up to 4K resolution</li>
+          <li><strong>Local Network Only</strong> — Your video never leaves your network or touches external servers</li>
+          <li><strong>Zero Data Collection</strong> — Privacy-first design with no analytics or tracking</li>
+          <li><strong>Dual Camera Support</strong> — Switch between front and rear cameras on the fly</li>
+          <li><strong>Built-in Flashlight</strong> — Illuminate low-light environments directly from the app</li>
+          <li><strong>Intelligent Storage</strong> — Optimized to minimize storage impact on your device</li>
+        </ul>
+
+        <h2>How It Works</h2>
+
+        <p>Launch SpyScope, and it immediately starts an HLS server on your iPhone. Open any browser on your local network, navigate to the provided URL, and you're streaming. It's that simple.</p>
+
+        <p>The app leverages Apple's AVFoundation framework for camera access and implements a lightweight HTTP server to deliver the HLS stream. Everything runs locally, ensuring minimal latency and maximum privacy.</p>
+
+        <h2>Why Local-Only?</h2>
+
+        <p>In an era where every app wants to upload your data to the cloud, SpyScope deliberately stays offline. Your footage is yours. Period. This makes it ideal for sensitive use cases where privacy is non-negotiable.</p>
+
+        <h2>Get SpyScope</h2>
+
+        <p>SpyScope is completely free and available now on the App Store. It requires iOS 18.0 or later.</p>
+
+        <p><a href="https://spyscope.app" target="_blank" rel="noopener">spyscope.app</a></p>
+
+        <p>I'd love to hear your feedback. If you find SpyScope useful, consider leaving a review on the App Store.</p>
+
+        <p><strong>Break Zero</strong></p>
+      </article>
+
+      <footer class="blog-footer">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+      </footer>
+    </div>
+  </body>
+</html>

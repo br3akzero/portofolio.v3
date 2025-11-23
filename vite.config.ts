@@ -39,6 +39,7 @@ export default defineConfig({
         main: resolve(__dirname, 'src/index.html'),
         projects: resolve(__dirname, 'src/projects.html'),
         blog: resolve(__dirname, 'src/blog/index.html'),
+        'blog-spyscope': resolve(__dirname, 'src/blog/spyscope.html'),
         'blog-update-2025': resolve(__dirname, 'src/blog/update-2025.html'),
         'blog-hello-world': resolve(__dirname, 'src/blog/hello-world.html'),
         'blog-open-sesame': resolve(__dirname, 'src/blog/open-sesame.html'),
