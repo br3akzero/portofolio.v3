@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>Blog | Daniel Reshad</title>
+    <meta name="title" content="Blog | Daniel Reshad" />
+    <meta name="description" content="Technical articles on iOS, React Native, Swift, Web3, and software engineering." />
+    <meta name="author" content="Daniel Reshad" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://danielreshad.com/blog" />
+    <meta property="og:title" content="Blog | Daniel Reshad" />
+    <meta property="og:description" content="Technical articles on iOS, React Native, Swift, Web3, and software engineering." />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://danielreshad.com/blog" />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/src/blog.css" />
+  </head>
+  <body class="blog-listing">
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
+      <defs>
+        <filter id="glass-distortion" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" seed="15" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="1" result="blurred" />
+          <feDisplacementMap in="SourceGraphic" in2="blurred" scale="4" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div id="app">
+      <header class="page-header">
+        <a href="/" class="back-link">&larr; Back</a>
+        <h1>Blog</h1>
+        <p class="subtitle">Technical articles and tutorials</p>
+      </header>
+
+      <main class="blog-grid">
+        <a href="/blog/web3-nextjs.html" class="blog-card">
+          <div class="blog-meta">
+            <time class="blog-date" datetime="2024-05-15">May 15, 2024</time>
+            <div class="blog-tags">
+              <span class="blog-tag">nextjs</span>
+              <span class="blog-tag">web3</span>
+              <span class="blog-tag">auth</span>
+            </div>
+          </div>
+          <h2>dApp powered by Auth.js, Web3 and NextJS 14</h2>
+          <p class="blog-description">Integrating Auth.js with Web3 Credentials Provider in Next.js 14.</p>
+        </a>
+
+        <a href="/blog/open-sesame.html" class="blog-card">
+          <div class="blog-meta">
+            <time class="blog-date" datetime="2023-12-19">December 19, 2023</time>
+            <div class="blog-tags">
+              <span class="blog-tag">macOS</span>
+              <span class="blog-tag">swift</span>
+              <span class="blog-tag">security</span>
+            </div>
+          </div>
+          <h2>Open Sesame</h2>
+          <p class="blog-description">Your network ports surveillance on the macOS.</p>
+        </a>
+
+        <a href="/blog/spm-publish.html" class="blog-card">
+          <div class="blog-meta">
+            <time class="blog-date" datetime="2023-11-14">November 14, 2023</time>
+            <div class="blog-tags">
+              <span class="blog-tag">swift</span>
+              <span class="blog-tag">ios</span>
+              <span class="blog-tag">ci/cd</span>
+            </div>
+          </div>
+          <h2>Publishing a Swift package with CI/CD</h2>
+          <p class="blog-description">A detailed guide on how to automate release of your Packages from a closed-source repo to a public one using the power of CI/CD.</p>
+        </a>
+
+        <a href="/blog/react-native-modules.html" class="blog-card">
+          <div class="blog-meta">
+            <time class="blog-date" datetime="2023-09-01">September 1, 2023</time>
+            <div class="blog-tags">
+              <span class="blog-tag">react-native</span>
+              <span class="blog-tag">ios</span>
+              <span class="blog-tag">native modules</span>
+            </div>
+          </div>
+          <h2>React Native: 3rd party dependency with View Modules</h2>
+          <p class="blog-description">In depth tutorial on how to link frameworks/libraries to your native view modules when building a react native package for iOS and Android.</p>
+        </a>
+
+        <a href="/blog/hello-world.html" class="blog-card">
+          <div class="blog-meta">
+            <time class="blog-date" datetime="2023-07-31">July 31, 2023</time>
+            <div class="blog-tags">
+              <span class="blog-tag">intro</span>
+              <span class="blog-tag">personal</span>
+            </div>
+          </div>
+          <h2>Hello World</h2>
+          <p class="blog-description">Welcome to my blog where I share insights on software engineering and building great products.</p>
+        </a>
+      </main>
+
+      <footer class="page-footer">
+        <p>&copy; 2024 Daniel Reshad</p>
+      </footer>
+    </div>
+  </body>
+</html>

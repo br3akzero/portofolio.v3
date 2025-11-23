@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Publishing a Swift package with CI/CD | Daniel Reshad</title>
+    <meta name="description" content="A detailed guide on how to automate release of your Packages from a closed-source repo to a public one using the power of CI/CD." />
+    <meta name="author" content="Daniel Reshad" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Publishing a Swift package with CI/CD | Daniel Reshad" />
+    <meta property="og:description" content="A detailed guide on how to automate release of your Packages from a closed-source repo to a public one." />
+    <meta property="article:published_time" content="2023-11-14T11:20:45+0000" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="canonical" href="https://danielreshad.com/blog/spm-publish" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="stylesheet" href="/src/blog.css" />
+  </head>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
+      <defs>
+        <filter id="glass-distortion" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" seed="15" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="1" result="blurred" />
+          <feDisplacementMap in="SourceGraphic" in2="blurred" scale="4" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div id="app">
+      <header class="blog-header">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+        <div class="blog-meta">
+          <time datetime="2023-11-14">November 14, 2023</time>
+          <div class="blog-tags">
+            <span class="blog-tag">swift</span>
+            <span class="blog-tag">swift-package</span>
+            <span class="blog-tag">ios</span>
+            <span class="blog-tag">ci/cd</span>
+          </div>
+        </div>
+        <h1>Publishing a Swift package with CI/CD</h1>
+      </header>
+
+      <article class="blog-content">
+        <p>This guide is going to be a bit more complicated as it is going to deploy a compiled binary framework from a private repository to a public repository using CI/CD.</p>
+
+        <p>Here is the scheme of what we are going to do:</p>
+
+        <div class="image-container">
+          <img src="/assets/blog3schema.svg" alt="Release Schema" />
+        </div>
+
+        <p>As we can see the process doesn't look that complicated except one single tiny thing that we need to do. We need to synchronize 2 repos so when a <code>git tag</code> is created from the private repo where the code is located the public repo gets a new GitHub release and updated <code>Package.swift</code> file with a fresh checksum and url.</p>
+
+        <p>On the private repo a new <code>git tag</code> will trigger the code to get tested & compiled into a <code>XCFramework</code>. When we have the <code>XCFramework</code> we are going to then get its checksum (<code>SHA256</code>) and update the public repos <code>Package.swift</code> with the checksum but there is an issue here we also need to provide a public url of where the new <code>XCFramework</code> has been hosted. To solve this we are going to leverage GitHub's release and artifacts and upload the <code>XCFramework</code> there.</p>
+
+        <h2>Step 1: Compiling</h2>
+
+        <p>We are going to start off by creating a basic compilation script to compile our project and create an XCFramework:</p>
+
+<pre><code>FRAMEWORK_NAME="MyFramework"
+PLATFORM_LIST=("iOS" "iOS Simulator")
+
+# Create Archives
+for platform in "${PLATFORM_LIST[@]}"
+do
+echo "Archiving platform: $platform"
+xcodebuild -verbose archive \
+    -workspace "$FRAMEWORK_NAME.xcworkspace" \
+    -scheme $FRAMEWORK_NAME \
+    -destination "generic/platform=$platform" \
+    -archivePath "path/to/archive/$platform" \
+done</code></pre>
+
+        <p>After we have created a standalone .framework, we need to wrap all the platforms into a single XCFramework:</p>
+
+<pre><code>echo "Creating $FRAMEWORK_NAME XCFramework..."
+xcodebuild -create-xcframework \
+    -archive $RELEASE_DIR/$ARCHIVE_DIR/iOS.xcarchive -framework $FRAMEWORK_NAME.framework \
+    -archive $RELEASE_DIR/$ARCHIVE_DIR/iOS\ Simulator.xcarchive -framework $FRAMEWORK_NAME.framework \
+    -output $RELEASE_DIR/$FRAMEWORK_NAME.xcframework</code></pre>
+
+        <h2>Step 2: Store the XCFramework</h2>
+
+        <p>We have our product that we can deploy out to the wild. Here is a demo code that uploads our compiled XCFramework and creates a GitHub release using the gh CLI:</p>
+
+<pre><code>gh release create $GIT_TAG ./Release/MyFramework -t "v${GIT_TAG}" -F ./Changelog.md</code></pre>
+
+        <h2>Step 3: Triggering other pipelines</h2>
+
+        <p>We are using CircleCI as our build server. On our private build server, trigger the HTTP request to start the public build server pipeline:</p>
+
+<pre><code>curl --request POST \
+  --url $PUBLIC_CIRCLE_PROJECT \
+  --header "Circle-Token: $CIRCLECI_API_KEY" \
+  --header "content-type: application/json" \
+  --data '{"parameters":{"run-release-workflow": true, "version":"'$CIRCLE_TAG'"}}'</code></pre>
+
+        <h2>Step 4: Publishing</h2>
+
+        <p>When the pipeline on the public build server gets triggered, we need to download the framework and get the SHA-256:</p>
+
+<pre><code>gh release download --repo $PRIVATE_REPO_URL $VERSION</code></pre>
+
+        <p>Calculate the CHECKSUM:</p>
+
+<pre><code>echo "CHECKSUM=$(shasum -a 256 MyFramework.zip | awk '{print $1}')" >> $BASH_ENV</code></pre>
+
+        <p>Make sure that <code>Package.swift</code> has a top variable called <code>let version</code>:</p>
+
+<pre><code>// swift-tools-version: 5.6
+import PackageDescription
+
+let version = "&lt;VERSION&gt;"
+
+let package = Package(
+  targets: [
+    .binaryTarget(
+      name: "MyFramework",
+      url: "https://github.com/org/repo/releases/download/\(version)/MyFramework.zip",
+      checksum: "&lt;CHECKSUM&gt;"
+    ),
+  ]
+)</code></pre>
+
+        <p>Then create the release:</p>
+
+<pre><code>git add Package.swift
+git commit -m "release: $VERSION [skip ci]"
+git push origin main
+gh release create $VERSION ./MyFramework.zip -t "v$VERSION" -F ./CHANGELOG.md</code></pre>
+
+        <h2>Conclusion</h2>
+
+        <p>That's all, folks. We have successfully created two pipelines that both validate our work, update all manifests, and publish them whenever we push out a new git tag.</p>
+
+        <p><strong>Break Zero</strong></p>
+      </article>
+
+      <footer class="blog-footer">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+      </footer>
+    </div>
+  </body>
+</html>

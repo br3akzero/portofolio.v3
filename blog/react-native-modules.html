@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Native: 3rd party dependency with View Modules | Daniel Reshad</title>
+    <meta name="description" content="In depth tutorial on how to link frameworks/libraries to your native view modules when building a react native package for iOS and Android." />
+    <meta name="author" content="Daniel Reshad" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="React Native: 3rd party dependency with View Modules | Daniel Reshad" />
+    <meta property="og:description" content="In depth tutorial on how to link frameworks/libraries to your native view modules." />
+    <meta property="article:published_time" content="2023-09-01T10:18:29+0000" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="canonical" href="https://danielreshad.com/blog/react-native-modules" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="stylesheet" href="/src/blog.css" />
+  </head>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
+      <defs>
+        <filter id="glass-distortion" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" seed="15" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="1" result="blurred" />
+          <feDisplacementMap in="SourceGraphic" in2="blurred" scale="4" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div id="app">
+      <header class="blog-header">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+        <div class="blog-meta">
+          <time datetime="2023-09-01">September 1, 2023</time>
+          <div class="blog-tags">
+            <span class="blog-tag">react</span>
+            <span class="blog-tag">react-native</span>
+            <span class="blog-tag">ios</span>
+            <span class="blog-tag">native modules</span>
+          </div>
+        </div>
+        <h1>React Native: 3rd party dependency with View Modules</h1>
+      </header>
+
+      <article class="blog-content">
+        <p>I'll start this blog post by saying that I have gained tremendous respect for my colleagues who use React Native day in and day out. The sheer number of tools needed to run and compile a single React Native project is truly overwhelming.</p>
+
+        <h2>Introduction</h2>
+
+        <h3>The Promise</h3>
+
+        <p><a href="https://reactnative.dev/" target="_blank" rel="noopener">React Native</a> promises to significantly reduce the workload needed to produce a multi-platform app. With just a single JavaScript project, an individual can create both an iOS and Android app that offer consistent behavior and appearance.</p>
+
+        <h3>The Reality</h3>
+
+        <p>When tasked with building custom experiences, like the one my client required, you quickly realize that three integrated development environments (IDEs) must run side-by-side to get the app functioning.</p>
+
+        <p>Managing attention across three distinct contexts—iOS, Web, and Android—is already a challenge. But then, you're hit with platform-specific errors. These errors are not only obscure but are further complicated by the lack of robust debugging tools for React Native.</p>
+
+        <h3>The Problem</h3>
+
+        <p>We're attempting to construct what's termed as a <a href="https://reactnative.dev/docs/native-components-ios" target="_blank" rel="noopener">React Native Native Component iOS</a>. This leverages a native Swift <a href="https://developer.apple.com/documentation/xcode/creating-a-multi-platform-binary-framework-bundle" target="_blank" rel="noopener">XCFramework</a> named Wowza Flowplayer Apple SDK, which I developed.</p>
+
+        <blockquote>
+          <p>The <strong>Wowza Flowplayer Apple SDK</strong> is a fully integrated video player that supports various media types, including VODs and livestreams. Despite its compact size and customizability, it operates seamlessly, demanding minimal device resources thanks to its efficient architecture.</p>
+        </blockquote>
+
+        <h2>Step 1: Setting Up the Project</h2>
+
+        <p>Starting a project using the <a href="https://www.npmjs.com/package/react-native-cli" target="_blank" rel="noopener">react-native-cli</a> and manually linking the Native Module can quickly become chaotic due to the extensive linking required.</p>
+
+        <p>Instead, I recommend utilizing the <a href="https://github.com/callstack/react-native-builder-bob" target="_blank" rel="noopener">react-native-builder-bob</a> CLI from Callstack. This tool is incredibly user-friendly:</p>
+
+<pre><code>npx create-react-native-library@latest my-library</code></pre>
+
+        <p>Answer the questions of the CLI:</p>
+
+<pre><code>? What is the name of the npm package? › &lt;NAME&gt;
+? What is the description for the package? › &lt;DESCRIPTION&gt;
+? What is the name of package author? › &lt;DEVELOPER&gt;
+? What is the email address for the package author? › &lt;EMAIL&gt;
+? What is the URL for the package author? › &lt;URL&gt;
+? What is the URL for the repository? › &lt;GIT_URL&gt;
+? What type of library do you want to develop? › Native view
+? Which languages do you want to use? › Kotlin & Swift</code></pre>
+
+        <p>All that remains is for us to <code>cd</code> into our project root and install the dependencies:</p>
+
+<pre><code>cd my-library
+yarn</code></pre>
+
+        <h2>Step 2: Exploring the Code</h2>
+
+        <h3>JavaScript</h3>
+
+        <p>Upon opening the <code>src</code> directory, you'll encounter the TypeScript code:</p>
+
+<pre><code>import {
+  requireNativeComponent,
+  UIManager,
+  Platform,
+  type ViewStyle,
+} from "react-native";
+
+type AwesomeLibraryProps = {
+  color: string,
+  style: ViewStyle,
+};
+
+const ComponentName = "AwesomeLibraryView";
+
+export const AwesomeLibraryView =
+  UIManager.getViewManagerConfig(ComponentName) != null
+    ? requireNativeComponent&lt;AwesomeLibraryProps&gt;(ComponentName)
+    : () =&gt; {
+        throw new Error(LINKING_ERROR);
+      };</code></pre>
+
+        <h3>iOS</h3>
+
+        <p>Let's look at the iOS side. The <strong>Bridging-Header</strong> file acts as an Objective-C header, creating a bridge between our Swift code and Objective-C:</p>
+
+<pre><code>#import &lt;React/RCTViewManager.h&gt;</code></pre>
+
+        <p>The <strong>ViewManager.m</strong> file exports our view manager:</p>
+
+<pre><code>#import &lt;React/RCTViewManager.h&gt;
+
+@interface RCT_EXTERN_MODULE(AwesomeLibraryViewManager, RCTViewManager)
+RCT_EXPORT_VIEW_PROPERTY(color, NSString)
+@end</code></pre>
+
+        <p>And the actual Swift implementation:</p>
+
+<pre><code>@objc(AwesomeLibraryViewManager)
+class AwesomeLibraryViewManager: RCTViewManager {
+
+  override func view() -&gt; (AwesomeLibraryView) {
+    return AwesomeLibraryView()
+  }
+
+  @objc override static func requiresMainQueueSetup() -&gt; Bool {
+    return false
+  }
+}
+
+class AwesomeLibraryView : UIView {
+
+  @objc var color: String = "" {
+    didSet {
+      self.backgroundColor = hexStringToUIColor(hexColor: color)
+    }
+  }
+}</code></pre>
+
+        <h2>Step 3: Incorporating 3rd Party Swift Dependencies</h2>
+
+        <p>We'll leverage CocoaPods. Open the <code>.podspec</code> file and add the dependency:</p>
+
+<pre><code># Set FlowplayerSDK dependency
+s.dependency "FlowplayerSDK", '~> 4.1.0'
+s.dependency "GoogleAds-IMA-iOS-SDK", '~> 3.19.1'</code></pre>
+
+        <p>Then run:</p>
+
+<pre><code>yarn clean
+yarn</code></pre>
+
+        <p>If you need to support iOS 14+, update the <code>Podfile</code>:</p>
+
+<pre><code>min_ios_versions_supported = ['14.0', min_ios_version_supported]
+index_of_max = min_ios_versions_supported.each_with_index.max_by { |number, _| number.to_f }[1]
+platform :ios, min_ios_versions_supported[index_of_max]
+prepare_react_native_project!</code></pre>
+
+        <h2>Step 4: Utilizing our 3rd Party Dependency</h2>
+
+        <p>Now we can import and use our dependency:</p>
+
+<pre><code>import FlowplayerSDK
+
+// Add the code for setup here</code></pre>
+
+        <blockquote>
+          <p><strong>Note:</strong> To get intellisense when developing React Native iOS Modules, open <code>example/ios/AwesomeLibraryExample.xcworkspace</code> → <code>Pods</code> → <code>Development Pods</code> → <code>react-native-awesome-library</code>. Edit all your files from here as the Example workspace has the context of all libraries and frameworks.</p>
+        </blockquote>
+
+        <h2>Conclusion</h2>
+
+        <p>It's been quite the journey, plagued with platform-specific intricacies, just to get our dependency to load in a manner that's update-friendly via the CLI and CocoaPods. It's my sincerest wish that this blog post spares any other developer the same strenuous path I've had to traverse.</p>
+
+        <p>GitHub repo for reference: <a href="https://github.com/rashadatjou/blog-react-native-awesome-library" target="_blank" rel="noopener">github.com/rashadatjou</a></p>
+
+        <p>Cheers to perseverance and the love of code,</p>
+
+        <p><strong>Break Zero.</strong></p>
+      </article>
+
+      <footer class="blog-footer">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+      </footer>
+    </div>
+  </body>
+</html>
