@@ -412,12 +412,41 @@ body {
     padding: 1rem;
   }
 
-  .blog-content {
-    padding: 1.25rem;
-  }
-
   .blog-content pre {
     padding: 1rem;
     font-size: 0.85rem;
+  }
+}
+
+/* Mobile: Remove card styling on blog posts */
+@media (max-width: 768px) {
+  body:not(.blog-listing) {
+    padding: 0;
+  }
+
+  body:not(.blog-listing) #app {
+    max-width: 100%;
+  }
+
+  body:not(.blog-listing) .blog-header {
+    padding: 1rem 1rem 0;
+  }
+
+  body:not(.blog-listing) .blog-content {
+    border-radius: 0;
+    padding: 1.25rem 1rem;
+  }
+
+  body:not(.blog-listing) .blog-content::before,
+  body:not(.blog-listing) .blog-content::after {
+    display: none;
+  }
+
+  body:not(.blog-listing) .blog-footer {
+    padding: 0 1rem 1rem;
+  }
+
+  body:not(.blog-listing) .image-container img {
+    border-radius: 0;
   }
 }
