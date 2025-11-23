@@ -107,7 +107,7 @@ body {
   font-size: var(--fs-xxxl);
   font-weight: 700;
   letter-spacing: -0.03em;
-  margin-bottom: 1rem;
+  margin-bottom: 0.25rem;
   color: #fff;
 }
 
@@ -115,7 +115,31 @@ body {
   font-size: var(--fs-lg);
   color: rgba(255, 255, 255, 0.6);
   font-weight: 500;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-hero .email {
+  font-family: inherit;
+  font-size: var(--fs-sm);
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  margin-top: 1rem;
+  display: inline-block;
+  width: fit-content;
+  padding: 0.6rem 1.2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.card-hero .email:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  transform: translateY(-1px);
 }
 
 .card-hero .bio {
