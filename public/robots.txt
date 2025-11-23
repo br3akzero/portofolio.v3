@@ -1,7 +1,7 @@
-# robots.txt for danielreshad.com
+# robots.txt for breakzero.io
 
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://danielreshad.com/sitemap.xml
+Sitemap: https://breakzero.io/sitemap.xml

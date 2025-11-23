@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://danielreshad.com/</loc>
+    <loc>https://breakzero.io/</loc>
     <lastmod>2025-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://danielreshad.com/projects</loc>
+    <loc>https://breakzero.io/projects</loc>
     <lastmod>2025-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://danielreshad.com/blog</loc>
+    <loc>https://breakzero.io/blog</loc>
     <lastmod>2025-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://danielreshad.com/blog/update-2025</loc>
+    <loc>https://breakzero.io/blog/update-2025</loc>
     <lastmod>2025-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://danielreshad.com/blog/web3-nextjs</loc>
+    <loc>https://breakzero.io/blog/web3-nextjs</loc>
     <lastmod>2024-05-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://danielreshad.com/blog/open-sesame</loc>
+    <loc>https://breakzero.io/blog/open-sesame</loc>
     <lastmod>2023-12-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://danielreshad.com/blog/spm-publish</loc>
+    <loc>https://breakzero.io/blog/spm-publish</loc>
     <lastmod>2023-11-14</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://danielreshad.com/blog/react-native-modules</loc>
+    <loc>https://breakzero.io/blog/react-native-modules</loc>
     <lastmod>2023-09-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://danielreshad.com/blog/hello-world</loc>
+    <loc>https://breakzero.io/blog/hello-world</loc>
     <lastmod>2023-07-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
