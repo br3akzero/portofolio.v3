@@ -13,7 +13,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <link rel="canonical" href="https://danielreshad.com/blog/web3-nextjs" />
     <meta name="theme-color" content="#000000" />
-    <link rel="stylesheet" href="/src/blog.css" />
+    <link rel="stylesheet" href="/style/blog.css" />
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
@@ -125,6 +125,12 @@ export const config = defaultWagmiConfig({
   }),
 });</code></pre>
 
+        <p>Once configured, you can test the wallet connection:</p>
+
+        <div class="image-container">
+          <img src="/assets/blog5.wallet.gif" alt="Web3Modal wallet connection demo" />
+        </div>
+
         <h2>AuthJS Setup</h2>
 
         <p>Create <code>app/server/auth.ts</code>:</p>
@@ -174,6 +180,12 @@ export const authOptions: NextAuthOptions = {
 };
 
 export const getServerAuthSession = () =&gt; getServerSession(authOptions);</code></pre>
+
+        <p>Here's a diagram showing the authentication flow:</p>
+
+        <div class="image-container">
+          <img src="/assets/blog5.flow.svg" alt="Auth.js and Web3 authentication flow diagram" />
+        </div>
 
         <h2>The useWeb3Auth Hook</h2>
 
@@ -255,6 +267,14 @@ export const Web3Button = () =&gt; {
     );
   }
 };</code></pre>
+
+        <h2>Results</h2>
+
+        <p>Here's the complete app in action:</p>
+
+        <div class="image-container">
+          <img src="/assets/blog5.result.gif" alt="Complete dApp connecting to MetaMask wallet" />
+        </div>
 
         <h2>Conclusion</h2>
 

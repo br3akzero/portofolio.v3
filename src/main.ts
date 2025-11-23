@@ -1,4 +1,4 @@
-import './style.css'
+import './style/style.css'
 
 const emailBtn = document.querySelector<HTMLButtonElement>('.email');
 

@@ -13,7 +13,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <link rel="canonical" href="https://danielreshad.com/blog/open-sesame" />
     <meta name="theme-color" content="#000000" />
-    <link rel="stylesheet" href="/src/blog.css" />
+    <link rel="stylesheet" href="/style/blog.css" />
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
@@ -41,17 +41,40 @@
       </header>
 
       <article class="blog-content">
-        <h3>I am proud to announce a passion project of mine:</h3>
-
         <div class="image-container">
-          <img src="/assets/blog4header.png" alt="Open Sesame app icon" />
+          <img src="/assets/blog4header.png" alt="Open Sesame app screenshot" />
         </div>
 
-        <p><code>OpenSesame</code> is a macOS menu bar application designed to enhance your network security and awareness. This utility tool allows you to monitor and manage open network ports on your Mac machine, ensuring you have complete control over your network connections.</p>
+        <p>Today I'm releasing <strong>Open Sesame</strong>, a lightweight macOS menu bar application for monitoring network port activity on your machine.</p>
 
-        <p>You can download it for free on GitHub:</p>
+        <h2>The Problem</h2>
+
+        <p>As developers, we often run multiple services locally—databases, API servers, development tools—each binding to different ports. Keeping track of what's running and identifying rogue processes can be tedious, usually requiring terminal commands like <code>lsof</code> or <code>netstat</code>.</p>
+
+        <h2>The Solution</h2>
+
+        <p>Open Sesame provides a clean, native interface that lives in your menu bar. With a single click, you can:</p>
+
+        <ul>
+          <li>View all open network ports and their associated processes</li>
+          <li>Identify which applications are listening on specific ports</li>
+          <li>Quickly spot unexpected network activity</li>
+          <li>Monitor your system's network footprint in real-time</li>
+        </ul>
+
+        <h2>Built with Swift</h2>
+
+        <p>The app is built entirely in Swift using AppKit, keeping it lightweight and performant. It integrates seamlessly with macOS and follows Apple's Human Interface Guidelines for a native experience.</p>
+
+        <h2>Open Source</h2>
+
+        <p>Open Sesame is completely free and open source. You can download the latest release or browse the source code on GitHub:</p>
 
         <p><a href="https://github.com/rashadatjou/open-sesame/releases" target="_blank" rel="noopener">github.com/rashadatjou/open-sesame/releases</a></p>
+
+        <p>Contributions and feedback are always welcome.</p>
+
+        <p><strong>Break Zero</strong></p>
       </article>
 
       <footer class="blog-footer">

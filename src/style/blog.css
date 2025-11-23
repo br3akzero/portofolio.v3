@@ -374,18 +374,16 @@ body {
   max-width: 100%;
   height: auto;
   border-radius: 16px;
-  margin: 1rem 0;
 }
 
 .image-container {
-  display: flex;
-  justify-content: center;
-  margin: 2rem 0;
+  margin: 0.5rem 0;
 }
 
 .image-container img {
-  max-width: 500px;
-  border-radius: 20px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* ===================
