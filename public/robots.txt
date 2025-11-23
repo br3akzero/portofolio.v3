@@ -1,0 +1,7 @@
+# robots.txt for danielreshad.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://danielreshad.com/sitemap.xml
