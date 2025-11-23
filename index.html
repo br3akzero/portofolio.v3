@@ -2,25 +2,71 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Break Zero</title>
+
+    <!-- Primary Meta Tags -->
+    <title>Daniel Reshad | Senior Software Engineer</title>
+    <meta name="title" content="Daniel Reshad | Senior Software Engineer" />
+    <meta name="description" content="Senior Software Engineer with 8+ years building client-side applications for Web, Apple, and Android platforms. Focused on developer tools and engineering productivity." />
+    <meta name="keywords" content="Daniel Reshad, Software Engineer, iOS Developer, Android Developer, Web Developer, React, Swift, TypeScript" />
+    <meta name="author" content="Daniel Reshad" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://danielreshad.com/" />
+    <meta property="og:title" content="Daniel Reshad | Senior Software Engineer" />
+    <meta property="og:description" content="Senior Software Engineer with 8+ years building client-side applications for Web, Apple, and Android platforms." />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://danielreshad.com/" />
+    <meta property="twitter:title" content="Daniel Reshad | Senior Software Engineer" />
+    <meta property="twitter:description" content="Senior Software Engineer with 8+ years building client-side applications for Web, Apple, and Android platforms." />
+    <meta property="twitter:image" content="/og-image.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://danielreshad.com/" />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#000000" />
   </head>
   <body>
     <div id="app">
-      <div>
-        <div class="card">
-          <h1>Break Zero</h1>
-          <ul>
-            <li>
-              <a href="http://github.com/br3akzero">Github</a>
-            </li>
-            <li>
-              <a href="https://www.youtube.com/@BreakZeroOne">YouTube</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <main class="landing">
+        <section class="card card-hero">
+          <h1>Daniel Reshad</h1>
+          <p class="tagline">Senior Software Engineer</p>
+          <p class="bio">
+            8+ years building client-side applications for Web, Apple, and Android platforms.
+          </p>
+        </section>
+
+        <a href="https://www.youtube.com/@BreakZeroOne" class="card card-link">
+          <span class="card-label">YouTube</span>
+          <span class="card-icon">&#9654;</span>
+        </a>
+
+        <a href="/blog" class="card card-link">
+          <span class="card-label">Blog</span>
+          <span class="card-icon">&#9998;</span>
+        </a>
+
+        <a href="/projects" class="card card-link">
+          <span class="card-label">Projects</span>
+          <span class="card-icon">&#10022;</span>
+        </a>
+
+        <a href="https://github.com/br3akzero" class="card card-link">
+          <span class="card-label">GitHub</span>
+          <span class="card-icon">&#10070;</span>
+        </a>
+      </main>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
