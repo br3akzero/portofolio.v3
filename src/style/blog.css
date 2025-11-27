@@ -399,6 +399,40 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Portrait mobile screenshots (9:16, 19.5:9) */
+.image-row.desktop {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.image-row.desktop::-webkit-scrollbar {
+  height: 8px;
+}
+
+.image-row.desktop::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.image-row.desktop::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.image-row.desktop::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.image-row.desktop img {
+  flex: 0 0 auto;
+  height: 500px;
+  width: auto;
+  object-fit: contain;
+  scroll-snap-align: start;
+}
+
 /* ===================
    Footer
    =================== */

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Building Notar Exchange at ETHGlobal | Daniel Reshad</title>
+    <meta name="description" content="How we built a trustless P2P crypto-to-fiat exchange protocol and won ETHGlobal - a story about collaboration, code, and having a blast." />
+    <meta name="author" content="Daniel Reshad" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://breakzero.io/blog/notar-exchange" />
+    <meta property="og:title" content="Building Notar Exchange at ETHGlobal | Daniel Reshad" />
+    <meta property="og:description" content="How we built a trustless P2P crypto-to-fiat exchange protocol and won ETHGlobal - a story about collaboration, code, and having a blast." />
+    <meta property="og:image" content="https://breakzero.io/og-image.png" />
+    <meta property="article:published_time" content="2024-09-15T00:00:00Z" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://breakzero.io/blog/notar-exchange" />
+    <meta name="twitter:title" content="Building Notar Exchange at ETHGlobal | Daniel Reshad" />
+    <meta name="twitter:description" content="How we built a trustless P2P crypto-to-fiat exchange protocol and won ETHGlobal - a story about collaboration, code, and having a blast." />
+    <meta name="twitter:image" content="https://breakzero.io/og-image.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href="https://breakzero.io/blog/notar-exchange" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="stylesheet" href="/style/blog.css" />
+  </head>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
+      <defs>
+        <filter id="glass-distortion" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" seed="15" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="1" result="blurred" />
+          <feDisplacementMap in="SourceGraphic" in2="blurred" scale="4" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div id="app">
+      <header class="blog-header">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+        <div class="blog-meta">
+          <time datetime="2024-09-15">September 15, 2024</time>
+          <div class="blog-tags">
+            <span class="blog-tag">web3</span>
+            <span class="blog-tag">hackathon</span>
+            <span class="blog-tag">blockchain</span>
+          </div>
+        </div>
+        <h1>Building Notar Exchange at ETHGlobal</h1>
+      </header>
+
+      <article class="blog-content">
+        <p>Hackathons have a special kind of energy. The pressure, the caffeine, the wild ideas that somehow come together at 3 AM. This September, my friend <a href="https://www.linkedin.com/in/sulejman-sarajlija/" target="_blank" rel="noopener">Sulejman Sarajlija</a> and I decided to throw our hats in the ring at ETHGlobal. What came out of it was <strong>Notar Exchange</strong> — and honestly, it was one of the most fun projects I've ever built.</p>
+
+        <div class="image-row desktop">
+          <img src="/assets/blog.eth/eht.1.jpg" alt="Notar Exchange interface" />
+          <img src="/assets/blog.eth/eth.2.jpg" alt="Notar Exchange transaction flow" />
+          <img src="/assets/blog.eth/eth.3.jpg" alt="Notar Exchange P2P exchange" />
+          <img src="/assets/blog.eth/eth.4.jpg" alt="Notar Exchange Wise integration" />
+          <img src="/assets/blog.eth/eth.5.jpg" alt="Notar Exchange Scroll blockchain" />
+          <img src="/assets/blog.eth/eth.6.jpg" alt="Notar Exchange demo" />
+        </div>
+
+        <h2>The Problem We Tackled</h2>
+
+        <p>If you've ever tried to exchange crypto for fiat in a second or third-world country, you know the pain. Payment providers are either unavailable, unreliable, or charge astronomical fees. We were inspired by <strong>zkp2p</strong>, but we wanted to adapt the concept to work with <strong>Wise</strong> — a payment platform that's more accessible globally.</p>
+
+        <p>The challenge? Building a trustless peer-to-peer exchange protocol where two strangers can swap crypto for fiat without needing to trust each other or rely on a custodian. No intermediaries. No "please don't scam me" moments.</p>
+
+        <h2>The Build</h2>
+
+        <p>Sulejman took on the backend, architecting the smart contracts and integrating with the <strong>Scroll blockchain</strong>. I handled the frontend, building an interface that made the whole trustless exchange feel... well, trustworthy. It's one thing to have secure contracts running on-chain; it's another to convince users they're safe.</p>
+
+        <p>We worked fast. Really fast. But the kind of fast where you're not just hacking things together — you're making real decisions about architecture, security, and user experience on the fly. Every choice mattered. Every bug was a learning opportunity (or a panic moment, depending on the time of day).</p>
+
+        <h2>Why It Was So Fun</h2>
+
+        <p>There's something magical about building alongside someone who just <em>gets it</em>. Sulejman and I synced up almost immediately. He'd finish a contract method, I'd wire it up in the UI, and we'd test it together. When something broke (and oh, things broke), we debugged it as a team.</p>
+
+        <p>The best part? We weren't just building for the judges. We were solving a real problem that affects real people. Knowing that Notar Exchange could actually help someone in an underserved market exchange assets securely made every late-night coding session worth it.</p>
+
+        <h2>The Win</h2>
+
+        <p>We didn't just submit a project — we won. <strong>Notar Exchange took home an ETHGlobal award.</strong> It validated everything we built, but more than that, it proved that good ideas, solid execution, and great collaboration can happen in a matter of days.</p>
+
+        <h2>What's Next?</h2>
+
+        <p>Hackathon projects often live and die in a weekend. But Notar Exchange feels different. We built something that works, something that matters. Whether it evolves into a full product or remains a proof of concept, it's out there — a testament to what's possible when you mix blockchain, creative problem-solving, and a bit of sleep deprivation.</p>
+
+        <p>If you want to check it out, the project is live on the <a href="https://ethglobal.com/showcase/notar-exchange-dwgr5" target="_blank" rel="noopener">ETHGlobal Showcase</a>.</p>
+
+        <p>And if you're curious about Sulejman's work, check out his <a href="https://sule.dev" target="_blank" rel="noopener">portfolio</a> — the guy's a backend wizard.</p>
+
+        <p>Here's to more hackathons, more late nights, and more projects that push the boundaries of what's possible.</p>
+
+        <p><strong>Break Zero</strong></p>
+      </article>
+
+      <footer class="blog-footer">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+      </footer>
+    </div>
+  </body>
+</html>
