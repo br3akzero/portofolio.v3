@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Structured Digestion as an Alternative to RAG | Daniel Reshad</title>
+    <meta name="description" content="A proof-of-concept exploring a third approach to giving AI agents access to document data, beyond context stuffing and RAG." />
+    <meta name="author" content="Daniel Reshad" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://breakzero.io/blog/healthcheck" />
+    <meta property="og:title" content="HealthCheck: Structured Digestion as an Alternative to RAG | Daniel Reshad" />
+    <meta property="og:description" content="A proof-of-concept exploring a third approach to giving AI agents access to document data, beyond context stuffing and RAG." />
+    <meta property="og:image" content="https://breakzero.io/og-image.png" />
+    <meta property="article:published_time" content="2026-03-16T00:00:00Z" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://breakzero.io/blog/healthcheck" />
+    <meta name="twitter:title" content="HealthCheck: Structured Digestion as an Alternative to RAG | Daniel Reshad" />
+    <meta name="twitter:description" content="A proof-of-concept exploring a third approach to giving AI agents access to document data, beyond context stuffing and RAG." />
+    <meta name="twitter:image" content="https://breakzero.io/og-image.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href="https://breakzero.io/blog/healthcheck" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="stylesheet" href="/style/blog.css" />
+  </head>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
+      <defs>
+        <filter id="glass-distortion" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" seed="15" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="1" result="blurred" />
+          <feDisplacementMap in="SourceGraphic" in2="blurred" scale="4" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div id="app">
+      <header class="blog-header">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+        <div class="blog-meta">
+          <time datetime="2026-03-16">March 16, 2026</time>
+          <div class="blog-tags">
+            <span class="blog-tag">swift</span>
+            <span class="blog-tag">AI</span>
+            <span class="blog-tag">MCP</span>
+            <span class="blog-tag">privacy</span>
+          </div>
+        </div>
+        <h1>Structured Digestion as an Alternative to RAG</h1>
+      </header>
+
+      <article class="blog-content">
+        <p>Most conversations about giving AI access to your documents land on one of two approaches: stuff the raw text into the prompt, or embed chunks into a vector database and retrieve them with RAG. Both work. Both have real limitations. I built <strong>HealthCheck</strong> to explore a third option.</p>
+
+        <h2>The Problem</h2>
+
+        <p>Medical documents are dense, multilingual, and full of structured information trapped in unstructured PDFs. Lab reports contain test names, numeric values, reference ranges, and flags. Prescriptions list medications with dosages and frequencies. Discharge summaries reference diagnoses, procedures, and follow-up plans. All of this arrives as flat text on a page.</p>
+
+        <p>The two common approaches struggle here in different ways:</p>
+
+        <p><strong>Context stuffing</strong> hits token limits fast. A patient with 40+ PDFs easily exceeds any context window. You pay full token cost on every request, there is no persistence across conversations, and no way to do cross-document reasoning unless everything fits in a single prompt.</p>
+
+        <p><strong>RAG</strong> embeds text chunks into a vector database and retrieves the top-k most similar results per query. But embedding similarity is approximate and struggles with multilingual medical terminology. You cannot do relational queries like "show me how my hemoglobin trended over three years." Chunk boundaries break table structures. And there is no concept of typed entities, so a lab value and a medication name are just vectors in the same space.</p>
+
+        <h2>The Idea: Structured Digestion</h2>
+
+        <p>What if the AI read each document once, understood it, and wrote structured records into a relational database? Not chunks of text with embeddings, but typed clinical entities: lab results with values, units, and reference ranges. Medications with dosages and ATC codes. Diagnoses with ICD-10 codes. Procedures, immunizations, allergies, imaging results.</p>
+
+        <p>Future queries would hit the database directly. No re-reading documents, no approximate similarity search. Just precise, typed lookups across a normalized schema.</p>
+
+        <p>That is the core idea behind HealthCheck.</p>
+
+        <h2>How It Works</h2>
+
+        <p>HealthCheck is a Swift MCP (Model Context Protocol) server backed by SQLite. The architecture is deliberately simple: the server is a dumb data layer that parses PDFs and stores/retrieves data. The AI agent does all the intelligence.</p>
+
+        <p>The flow looks like this:</p>
+
+        <ol>
+          <li><strong>Ingest</strong> - A PDF is fed through a dual extraction pipeline. PDFKit pulls embedded text while Apple Vision's <code>RecognizeDocumentsRequest</code> runs OCR with structure detection (tables, lists, paragraphs). A reconciler picks the best version per page.</li>
+          <li><strong>Read</strong> - The AI agent requests the extracted text through MCP tools and reads the document, handling multilingual content, OCR artifacts, and ambiguous formatting naturally.</li>
+          <li><strong>Extract</strong> - The agent calls back with structured data: <code>create_lab_result</code>, <code>create_medication</code>, <code>create_diagnosis</code>, and so on. Each entity is typed, validated, and stored in a relational schema.</li>
+          <li><strong>Query</strong> - When you ask a health question later, the agent queries the database directly. "What was my MPV?" becomes a precise lookup, not a similarity search across text chunks.</li>
+        </ol>
+
+        <p>37 MCP tools handle the full lifecycle: 3 for ingestion, 14 for CRUD operations across clinical entities, 18 for querying, and 2 for updates. The database has 18 tables covering patients, encounters, facilities, doctors, and the full range of clinical data types.</p>
+
+        <h2>Why MCP</h2>
+
+        <p>The Model Context Protocol is what makes this architecture practical. It gives the AI agent typed tools to interact with the database, turning it from a text generator into a data operator. The agent does not get a raw SQL connection. It gets purpose-built tools like <code>create_lab_result</code> and <code>get_lab_history</code>, each with a defined schema. The server validates inputs, the agent reasons about content.</p>
+
+        <p>This separation is important. The MCP server never makes clinical decisions. It does not guess what a lab value means or whether a medication interaction exists. It stores and retrieves structured data. The intelligence stays in the agent.</p>
+
+        <h2>Privacy by Architecture</h2>
+
+        <p>All data stays local in a SQLite database on your machine. No embeddings sent to external services, no vector database in the cloud, no document text uploaded for processing. The AI agent only sees the structured query results it explicitly requests through MCP tools. When you ask "what was my last blood pressure?", the agent calls <code>get_lab_history</code> and receives just the relevant records, not your entire medical history.</p>
+
+        <h2>The Trade-offs</h2>
+
+        <p>This approach has real costs. The AI must read and structure each document upfront, which takes time and API calls. Context stuffing and RAG are faster to set up. The extraction is not perfect, so the system tracks confidence scores and supports a review workflow. The relational schema must be designed ahead of time, which means new entity types require migrations. RAG handles arbitrary content more flexibly.</p>
+
+        <p>Structured digestion works best for inherently structured data: medical records, financial documents, lab reports. Free-form text like essays or emails would not benefit much from this pattern.</p>
+
+        <h2>The Comparison</h2>
+
+        <p>Here is how the three approaches compare across key dimensions:</p>
+
+        <ul>
+          <li><strong>Data format</strong> - Raw text in prompt vs. text chunks with embeddings vs. typed relational records</li>
+          <li><strong>Query precision</strong> - Depends on context vs. approximate similarity vs. exact database queries</li>
+          <li><strong>Cross-document reasoning</strong> - Only if docs fit in context vs. poor (chunks are isolated) vs. native relational joins</li>
+          <li><strong>Persistence</strong> - None vs. embeddings persist vs. full structured persistence</li>
+          <li><strong>Token efficiency</strong> - Send everything every time vs. send top-k chunks vs. send only requested fields</li>
+          <li><strong>Privacy</strong> - Full text sent every request vs. text sent to embedding service vs. all data stays local</li>
+        </ul>
+
+        <h2>Tech Stack</h2>
+
+        <ul>
+          <li><strong>Swift 6</strong> with strict concurrency</li>
+          <li><strong>MCP</strong> via the official Swift SDK (stdio transport)</li>
+          <li><strong>GRDB.swift / SQLite</strong> with Codable records and built-in migrations</li>
+          <li><strong>PDFKit + Apple Vision</strong> for dual text extraction</li>
+          <li><strong>67 tests</strong> across 13 test files using Swift Testing</li>
+        </ul>
+
+        <h2>What I Learned</h2>
+
+        <p>Building this reinforced something I keep running into: the right data model matters more than the retrieval algorithm. RAG is powerful for unstructured, open-ended content. But when your documents contain inherently structured data, fighting to reconstruct that structure from embedding similarity feels backwards. Sometimes the better approach is to structure it once and query it properly.</p>
+
+        <p>MCP turned out to be the right abstraction for this pattern. It creates a clean boundary between the dumb server and the intelligent agent, and it generalizes well. The same pattern could apply to financial records, legal documents, compliance paperwork, or any domain where structured data is trapped in unstructured documents.</p>
+
+        <p>This is a proof of concept, not a product. It works end-to-end with real multilingual medical PDFs, but it needs more testing and refinement. The source code is available on GitHub.</p>
+
+        <p><strong>Break Zero</strong></p>
+      </article>
+
+      <footer class="blog-footer">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+      </footer>
+    </div>
+  </body>
+</html>
