@@ -32,27 +32,26 @@ This project includes a `Dockerfile` and can be run locally using Apple's native
 
 ```bash
 container system start                                    # Start the system service (once)
-container build --tag portfolio --file Dockerfile .       # Build the image
-container run --name portfolio --detach portfolio:latest   # Run in background
+container build --tag portfolio --file Dockerfile .       # Build the image (deps only)
+container run --name portfolio --detach -v "$(pwd):/app" portfolio:latest  # Run with bind mount
 container inspect portfolio                               # Get the container's IP address
 ```
+
+The project directory is bind-mounted into the container. File changes on the host are immediately visible - no rebuild needed. Only rebuild when `package.json` or `bun.lock` change.
 
 Access the site at `http://<container-ip>:5173`. Each container gets its own dedicated IP (no port mapping needed).
 
 ### Common commands
 
 ```bash
-container ls                # List running containers
+container list              # List running containers
 container logs portfolio    # View logs
 container stop portfolio    # Stop the container
 container rm portfolio      # Remove the container
-container images            # List built images
+container image list        # List built images
+container image delete portfolio:latest  # Delete an image
 ```
 
-### Rebuild after changes
+### Skills
 
-```bash
-container stop portfolio && container rm portfolio
-container build --tag portfolio --file Dockerfile .
-container run --name portfolio --detach portfolio:latest
-```
+Use the `/container-start` skill (defined in `.opencode/skills/container-start/`) to automate the full teardown, rebuild, and startup sequence. Use `--rebuild` flag only when dependencies have changed.
