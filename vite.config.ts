@@ -48,6 +48,7 @@ export default defineConfig({
         'blog-spm-publish': resolve(__dirname, 'src/blog/spm-publish.html'),
         'blog-react-native-modules': resolve(__dirname, 'src/blog/react-native-modules.html'),
         'blog-web3-nextjs': resolve(__dirname, 'src/blog/web3-nextjs.html'),
+        'blog-opencode-claude-sub': resolve(__dirname, 'src/blog/opencode-claude-sub.html'),
       },
     },
   },

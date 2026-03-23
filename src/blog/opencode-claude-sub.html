@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenCode with Claude Pro/Max | Daniel Reshad</title>
+    <meta name="description" content="How to run OpenCode using your Claude Pro or Max subscription tokens via opencode-inject - because you paid for it." />
+    <meta name="author" content="Daniel Reshad" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://breakzero.io/blog/opencode-claude-sub" />
+    <meta property="og:title" content="OpenCode with Claude Pro/Max | Daniel Reshad" />
+    <meta property="og:description" content="How to run OpenCode using your Claude Pro or Max subscription tokens via opencode-inject - because you paid for it." />
+    <meta property="og:image" content="https://breakzero.io/og-image.png" />
+    <meta property="article:published_time" content="2026-03-23T00:00:00Z" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://breakzero.io/blog/opencode-claude-sub" />
+    <meta name="twitter:title" content="OpenCode with Claude Pro/Max | Daniel Reshad" />
+    <meta name="twitter:description" content="How to run OpenCode using your Claude Pro or Max subscription tokens via opencode-inject - because you paid for it." />
+    <meta name="twitter:image" content="https://breakzero.io/og-image.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href="https://breakzero.io/blog/opencode-claude-sub" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="stylesheet" href="/style/blog.css" />
+  </head>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
+      <defs>
+        <filter id="glass-distortion" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" seed="15" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="1" result="blurred" />
+          <feDisplacementMap in="SourceGraphic" in2="blurred" scale="4" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div id="app">
+      <header class="blog-header">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+        <div class="blog-meta">
+          <time datetime="2026-03-23">March 23, 2026</time>
+          <div class="blog-tags">
+            <span class="blog-tag">opencode</span>
+            <span class="blog-tag">claude</span>
+            <span class="blog-tag">tooling</span>
+            <span class="blog-tag">open-source</span>
+          </div>
+        </div>
+        <h1>OpenCode with Claude Pro/Max</h1>
+      </header>
+
+      <article class="blog-content">
+        <p><a href="https://opencode.ai" target="_blank" rel="noopener">OpenCode</a> is a terminal-based AI coding agent. It supports Claude natively, and it can authenticate using your Claude Pro or Max subscription via OAuth - the same way Claude Code does. No API key needed.</p>
+
+        <p>There is a problem though. OpenCode's built-in token refresh no longer works. Once your OAuth access token expires, OpenCode locks you out. You are left staring at an auth error despite having an active paid subscription.</p>
+
+        <p>This is an artificial restriction. You are paying for access to the API. The tokens are yours. Anthropic stores them in the macOS Keychain when you log into Claude Code, and they are perfectly valid - OpenCode just fails to refresh them on its own.</p>
+
+        <h2>The Fix</h2>
+
+        <p><code>opencode-inject</code> is a small shell script that bridges the gap. It reads your current Claude Code OAuth credentials directly from the macOS Keychain and writes them into OpenCode's <code>auth.json</code> file. Run it whenever your session expires and OpenCode is back online immediately.</p>
+
+        <p>Here is what it does under the hood:</p>
+
+        <ul>
+          <li>Reads the <code>Claude Code-credentials</code> entry from the macOS Keychain using <code>security</code></li>
+          <li>Extracts the <code>accessToken</code>, <code>refreshToken</code>, and <code>expiresAt</code> fields</li>
+          <li>Writes them into <code>~/.local/share/opencode/auth.json</code> under the <code>anthropic</code> OAuth key</li>
+        </ul>
+
+        <p>No third-party dependencies. No network calls. Pure shell and Python 3, both already on your Mac.</p>
+
+        <h2>Requirements</h2>
+
+        <ul>
+          <li>macOS (Keychain access via <code>security</code> CLI)</li>
+          <li>Claude Code installed and authenticated with a Pro or Max subscription</li>
+          <li>OpenCode installed</li>
+        </ul>
+
+        <h2>Get It</h2>
+
+        <p>The script is hosted on Codeberg:</p>
+
+        <p><a href="https://codeberg.org/PLACEHOLDER/opencode-inject" target="_blank" rel="noopener">codeberg.org/PLACEHOLDER/opencode-inject</a></p>
+
+        <p>Download the script, make it executable, and drop it somewhere on your <code>$PATH</code>:</p>
+
+        <pre><code>chmod +x opencode-inject
+mv opencode-inject ~/.local/bin/</code></pre>
+
+        <p>Then, whenever OpenCode complains about an expired token, just run:</p>
+
+        <pre><code>opencode-inject</code></pre>
+
+        <p>That's it. Your subscription tokens are synced and OpenCode works again.</p>
+
+        <p><strong>Break Zero</strong></p>
+      </article>
+
+      <footer class="blog-footer">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+      </footer>
+    </div>
+  </body>
+</html>
