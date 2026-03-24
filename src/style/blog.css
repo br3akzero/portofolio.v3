@@ -434,6 +434,26 @@ body {
 }
 
 /* ===================
+   Warning Card
+   =================== */
+
+.warning-card {
+  background: rgba(253, 224, 71, 0.1);
+  border: 1px solid rgba(253, 224, 71, 0.3);
+  border-left: 4px solid rgba(253, 224, 71, 0.7);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: var(--fs-base);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.8;
+}
+
+.warning-card strong {
+  color: #fde047;
+}
+
+/* ===================
    Footer
    =================== */
 
