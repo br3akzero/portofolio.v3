@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OpenCode with Claude Pro/Max | Daniel Reshad</title>
-    <meta name="description" content="How to run OpenCode using your Claude Pro or Max subscription tokens via opencode-inject - because you paid for it." />
+    <meta name="description" content="How to run OpenCode using your Claude Pro or Max subscription - the plugin Anthropic killed, and the workarounds that survive." />
     <meta name="author" content="Daniel Reshad" />
     <meta name="robots" content="index, follow" />
 
@@ -12,15 +12,15 @@
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://breakzero.io/blog/opencode-claude-sub" />
     <meta property="og:title" content="OpenCode with Claude Pro/Max | Daniel Reshad" />
-    <meta property="og:description" content="How to run OpenCode using your Claude Pro or Max subscription tokens via opencode-inject - because you paid for it." />
+    <meta property="og:description" content="How to run OpenCode using your Claude Pro or Max subscription - the plugin Anthropic killed, and the workarounds that survive." />
     <meta property="og:image" content="https://breakzero.io/og-image.png" />
-    <meta property="article:published_time" content="2026-03-23T00:00:00Z" />
+    <meta property="article:published_time" content="2026-03-26T00:00:00Z" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://breakzero.io/blog/opencode-claude-sub" />
     <meta name="twitter:title" content="OpenCode with Claude Pro/Max | Daniel Reshad" />
-    <meta name="twitter:description" content="How to run OpenCode using your Claude Pro or Max subscription tokens via opencode-inject - because you paid for it." />
+    <meta name="twitter:description" content="How to run OpenCode using your Claude Pro or Max subscription - the plugin Anthropic killed, and the workarounds that survive." />
     <meta name="twitter:image" content="https://breakzero.io/og-image.png" />
 
     <!-- Favicon -->
@@ -44,7 +44,7 @@
       <header class="blog-header">
         <a href="/blog" class="back-link">&larr; Back to Blog</a>
         <div class="blog-meta">
-          <time datetime="2026-03-23">March 23, 2026</time>
+          <time datetime="2026-03-26">March 26, 2026</time>
           <div class="blog-tags">
             <span class="blog-tag">opencode</span>
             <span class="blog-tag">claude</span>
@@ -56,17 +56,53 @@
       </header>
 
       <article class="blog-content">
-        <p><a href="https://opencode.ai" target="_blank" rel="noopener">OpenCode</a> is a terminal-based AI coding agent. It supports Claude natively, and it can authenticate using your Claude Pro or Max subscription via OAuth - the same way Claude Code does. No API key needed.</p>
+        <p><a href="https://opencode.ai" target="_blank" rel="noopener">OpenCode</a> is a terminal-based AI coding agent. It used to support Claude Pro/Max subscriptions out of the box via an OAuth plugin that handled authentication the same way Claude Code does. No API key needed, just your existing subscription.</p>
 
-        <p>There is a problem though. OpenCode's built-in token refresh no longer works. Once your OAuth access token expires, OpenCode locks you out. You are left staring at an auth error despite having an active paid subscription.</p>
+        <p>That changed with OpenCode 1.3.0. Anthropic threatened legal action over the plugin, and OpenCode's maintainer <a href="https://x.com/thdxr" target="_blank" rel="noopener">Dax</a> removed it. The built-in <code>opencode-anthropic-auth</code> npm package was pulled. If you run <code>/connect</code> in OpenCode now and select Anthropic, the Claude Pro/Max OAuth option is gone.</p>
 
-        <p>This is an artificial restriction. You are paying for access to the API. The tokens are yours. Anthropic stores them in the macOS Keychain when you log into Claude Code, and they are perfectly valid - OpenCode just fails to refresh them on its own.</p>
+        <p>You are paying for access to the model. The tokens are yours. Anthropic just does not want third-party tools using them.</p>
 
-        <h2>The Fix</h2>
+        <h2>What Happened</h2>
 
-        <p><code>opencode-inject</code> is a small shell script that bridges the gap. It reads your current Claude Code OAuth credentials directly from the macOS Keychain and writes them into OpenCode's <code>auth.json</code> file. Run it whenever your session expires and OpenCode is back online immediately.</p>
+        <p>Prior to version 1.3.0, OpenCode shipped with a plugin called <code>opencode-anthropic-auth</code>. It handled the full OAuth flow against Anthropic's servers: PKCE handshake, token exchange, automatic refresh, and header injection. It worked seamlessly.</p>
 
-        <p>Here is what it does under the hood:</p>
+        <p>Anthropic's legal team stepped in and demanded it be removed. The <a href="https://www.npmjs.com/package/opencode-anthropic-auth" target="_blank" rel="noopener">npm package</a> was unpublished. The OpenCode docs now state that "Anthropic explicitly prohibits" using Pro/Max subscriptions with third-party tools.</p>
+
+        <h2>The Fix: Community Plugin</h2>
+
+        <p>The community rebuilt the auth plugin as an external package: <a href="https://github.com/ex-machina-co/opencode-anthropic-auth" target="_blank" rel="noopener">@ex-machina/opencode-anthropic-auth</a>. It replicates the original functionality that was removed.</p>
+
+        <p>It supports three authentication methods:</p>
+
+        <ul>
+          <li><strong>Claude Pro/Max OAuth</strong> - authenticates via <code>claude.ai</code> using your subscription. No API costs.</li>
+          <li><strong>API Key Creation</strong> - OAuth flow via <code>console.anthropic.com</code> that generates an API key on your behalf.</li>
+          <li><strong>Manual API Key</strong> - enter an existing API key directly.</li>
+        </ul>
+
+        <p>Under the hood it runs the same PKCE-secured OAuth flow, exchanges authorization codes for token pairs, and injects the right headers and beta flags into requests.</p>
+
+        <h3>Setup</h3>
+
+        <p>Add the plugin to your OpenCode config. This goes in either your global config at <code>~/.config/opencode/opencode.json</code> or your project-level <code>opencode.json</code>:</p>
+
+        <pre><code>{
+  "plugin": ["@ex-machina/opencode-anthropic-auth"]
+}</code></pre>
+
+        <p>Launch OpenCode. Run <code>/connect</code>, select Anthropic, and the Claude Pro/Max OAuth option is back. Authenticate through your browser and you are set.</p>
+
+        <div class="warning-card">
+          <strong>Warning:</strong> This plugin exists in a legal grey area. Anthropic forced the original out of OpenCode for a reason. Use it with that understanding.
+        </div>
+
+        <h2>The Token Refresh Problem</h2>
+
+        <p>The plugin's automatic token refresh has been broken for some time. Once your OAuth access token expires, the plugin fails to renew it and OpenCode locks you out. You are left staring at an auth error despite having an active subscription and a working plugin.</p>
+
+        <p>On macOS, <code>opencode-inject</code> fixes this. It is a shell script that reads your Claude Code OAuth credentials directly from the macOS Keychain and writes them into OpenCode's <code>auth.json</code> file. Run it whenever the plugin fails to refresh and you are back online immediately.</p>
+
+        <p>Here is what it does:</p>
 
         <ul>
           <li>Reads the <code>Claude Code-credentials</code> entry from the macOS Keychain using <code>security</code></li>
@@ -76,20 +112,20 @@
 
         <p>No third-party dependencies. No network calls. Pure shell and Python 3, both already on your Mac.</p>
 
-        <h2>Requirements</h2>
+        <h3>Requirements</h3>
 
         <ul>
-          <li>macOS (Keychain access via <code>security</code> CLI)</li>
+          <li>macOS only (Keychain access via <code>security</code> CLI)</li>
           <li>Claude Code installed and authenticated with a Pro or Max subscription</li>
-          <li>OpenCode installed</li>
+          <li>OpenCode installed with the community plugin configured</li>
         </ul>
 
-        <h2>Quick Start</h2>
+        <h3>Setup</h3>
 
         <ol>
           <li>
             <strong>Auth with Claude Code</strong>
-            <p>Run <code>claude</code> in your terminal to authenticate before using the inject script.</p>
+            <p>Run <code>claude</code> in your terminal to make sure your tokens are fresh.</p>
             <div class="warning-card">
               <strong>Warning:</strong> Make sure your Claude Code session does not have stale tokens. If you have not launched Claude Code in a while, open it and verify it connects successfully before running the inject script. Stale or expired tokens in the Keychain will be copied as-is and will not work.
             </div>
@@ -103,9 +139,9 @@ mv opencode-inject ~/.local/bin/</code></pre>
           </li>
           <li>
             <strong>Run it</strong>
-            <p>Whenever OpenCode complains about an expired token, just run:</p>
+            <p>Whenever OpenCode complains about an expired token:</p>
             <pre><code>opencode-inject</code></pre>
-            <p>That's it. Your subscription tokens are synced and OpenCode works again.</p>
+            <p>Your subscription tokens are synced and OpenCode works again.</p>
           </li>
         </ol>
 
