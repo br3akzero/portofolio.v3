@@ -49,6 +49,7 @@ export default defineConfig({
         'blog-react-native-modules': resolve(__dirname, 'src/blog/react-native-modules.html'),
         'blog-web3-nextjs': resolve(__dirname, 'src/blog/web3-nextjs.html'),
         'blog-opencode-claude-sub': resolve(__dirname, 'src/blog/opencode-claude-sub.html'),
+        'blog-claude-code-hardening': resolve(__dirname, 'src/blog/claude-code-hardening.html'),
       },
     },
   },
