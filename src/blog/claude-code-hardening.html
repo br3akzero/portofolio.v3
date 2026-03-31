@@ -70,6 +70,8 @@
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "CLAUDE_CODE_ATTRIBUTION_HEADER": "0"
   },
+  "includeCoAuthoredBy": false,
+  "includeGitInstructions": false,
   "promptSuggestionEnabled": false
 }</code></pre>
 
@@ -100,6 +102,22 @@
         <p>When enabled, Claude Code sends context to Anthropic to generate "smart" prompt suggestions - the auto-complete hints that appear as you type. This means fragments of your project context, your recent prompts, and potentially file contents are sent upstream outside of your normal conversation flow.</p>
 
         <p>Set it to <code>false</code>. You know what you want to type.</p>
+
+        <h3><code>includeCoAuthoredBy</code></h3>
+
+        <p>By default, Claude Code appends a <code>Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;</code> trailer to every commit message it creates. This is a tracking vector.</p>
+
+        <p>Every public repository on GitHub is indexed and searchable. That trailer is a machine-readable tag that lets anyone, Anthropic included, scrape public git history and identify exactly which commits were written with Claude Code, which developers use it, how often, and on which projects. It is a passive usage tracker baked into your version control.</p>
+
+        <p>Even in private repos, it leaks to anyone with read access: teammates, CI systems, auditors, future acquirers during due diligence. It is permanent metadata in your git log that you cannot easily remove after the fact without rewriting history.</p>
+
+        <p>Set it to <code>false</code>. Your commits are your commits.</p>
+
+        <h3><code>includeGitInstructions</code></h3>
+
+        <p>Claude Code injects built-in git workflow instructions into its system prompt. These dictate how it writes commit messages, handles PRs, and follows git conventions. If you define your own workflow, such as a custom commit skill or project-specific conventions in <code>CLAUDE.md</code>, these built-in instructions conflict with yours.</p>
+
+        <p>Setting this to <code>false</code> removes them entirely. If you have your own git workflow, this prevents Claude from fighting you on format or injecting unwanted metadata.</p>
 
         <h2>What You Cannot Avoid</h2>
 
