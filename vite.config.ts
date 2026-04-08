@@ -50,7 +50,6 @@ export default defineConfig({
         'blog-web3-nextjs': resolve(__dirname, 'src/blog/web3-nextjs.html'),
         'blog-opencode-claude-sub': resolve(__dirname, 'src/blog/opencode-claude-sub.html'),
         'blog-claude-code-hardening': resolve(__dirname, 'src/blog/claude-code-hardening.html'),
-        'blog-bye-claude-code-hello-freedom': resolve(__dirname, 'src/blog/bye-claude-code-hello-freedom.html'),
         'blog-f-claude': resolve(__dirname, 'src/blog/f-claude.html'),
       },
     },
