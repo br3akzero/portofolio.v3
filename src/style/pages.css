@@ -236,6 +236,19 @@ body {
   background: rgba(255, 255, 255, 0.3);
 }
 
+.scroll-link {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.2);
+  text-underline-offset: 2px;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+
+.scroll-link:hover {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+}
+
 .experience-content > .project-link,
 .experience-content > .project-links,
 .experience-content > .project-link--inactive {
