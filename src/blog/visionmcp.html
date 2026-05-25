@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VisionMCP: On-Device OCR | Daniel Reshad</title>
+    <meta name="description" content="A standalone MCP server that provides on-device Vision Framework access for PDF and image text extraction. No cloud, no API keys, fully on-device." />
+    <meta name="author" content="Daniel Reshad" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://breakzero.io/blog/visionmcp" />
+    <meta property="og:title" content="VisionMCP: On-Device OCR | Daniel Reshad" />
+    <meta property="og:description" content="A standalone MCP server that provides on-device Vision Framework access for PDF and image text extraction. No cloud, no API keys, fully on-device." />
+    <meta property="og:image" content="https://breakzero.io/og-image.png" />
+    <meta property="article:published_time" content="2026-05-26T00:00:00Z" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://breakzero.io/blog/visionmcp" />
+    <meta name="twitter:title" content="VisionMCP: On-Device OCR | Daniel Reshad" />
+    <meta name="twitter:description" content="A standalone MCP server that provides on-device Vision Framework access for PDF and image text extraction. No cloud, no API keys, fully on-device." />
+    <meta name="twitter:image" content="https://breakzero.io/og-image.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href="https://breakzero.io/blog/visionmcp" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="stylesheet" href="/style/blog.css" />
+  </head>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
+      <defs>
+        <filter id="glass-distortion" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" seed="15" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="1" result="blurred" />
+          <feDisplacementMap in="SourceGraphic" in2="blurred" scale="4" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div id="app">
+      <header class="blog-header">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+        <div class="blog-meta">
+          <time datetime="2026-05-26">May 26, 2026</time>
+          <div class="blog-tags">
+            <span class="blog-tag">swift</span>
+            <span class="blog-tag">MCP</span>
+            <span class="blog-tag">privacy</span>
+            <span class="blog-tag">release</span>
+          </div>
+        </div>
+        <h1>VisionMCP: On-Device OCR</h1>
+      </header>
+
+      <article class="blog-content">
+        <p>Every AI tool wants you to upload your documents to their cloud. Your invoices, your contracts, your medical records - all sent to some server you don&rsquo;t control.</p>
+
+        <p>Today I&rsquo;m releasing <strong>VisionMCP</strong>, a standalone MCP server that extracts text from PDFs and images using Apple&rsquo;s Vision Framework. No cloud, no API keys, no data leaves your machine.</p>
+
+        <p><img src="/assets/blog.visionmcp.demo.gif" alt="VisionMCP demo showing PDF and image text extraction" /></p>
+
+        <h2>Why I Built This</h2>
+
+        <p>The problem is straightforward. You have documents - PDFs, screenshots, scanned images - and you need the text out of them to feed into your AI tools. The existing options all have tradeoffs:</p>
+
+        <ul>
+          <li><strong>Cloud OCR APIs</strong> (Google Vision, Textract) - great accuracy, but you&rsquo;re sending files to someone else&rsquo;s server. For contracts or financial documents, that&rsquo;s a non-starter.</li>
+          <li><strong>Tesseract</strong> - open source and local, but painful to set up and rough on mixed layouts.</li>
+          <li><strong>macOS native PDF extraction</strong> - works if the PDF has a text layer. Scanned documents? Screenshots? Nothing.</li>
+        </ul>
+
+        <p>I wanted something that runs entirely on my Mac, handles both PDFs and images, understands document layout, and plugs directly into my AI tools.</p>
+
+        <h2>How It Works</h2>
+
+        <p>VisionMCP exposes two tools via the <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">Model Context Protocol</a>:</p>
+
+        <ul>
+          <li><strong>ingest_pdf</strong> - renders PDF pages to images via PDFKit, then runs <code>RecognizeDocumentsRequest</code> (macOS 26 Vision API) for structured document OCR. Extracts text, tables, lists, and paragraphs.</li>
+          <li><strong>ingest_image</strong> - loads images via <code>CGImageSource</code>, then runs <code>VNRecognizeTextRequest</code> for text OCR. Supports PNG, JPEG, TIFF, BMP, GIF, HEIC, and WebP.</li>
+        </ul>
+
+        <p>Both paths produce extracted text, confidence scores, and automatic text chunking with configurable overlap - ready to drop into an AI context window.</p>
+
+        <p>The architecture is intentionally simple. Two independent parsers, each producing structured results. No shared protocol, no factory, no abstraction layers:</p>
+
+        <pre><code>VisionMCP
+├── PDFParser        # Renders pages, runs RecognizeDocumentsRequest
+├── ImageParser      # Loads images, runs VNRecognizeTextRequest
+├── TextChunker      # Splits text into overlapping token-limited chunks
+├── IngestService    # Orchestrates parsing + chunking
+└── IngestTools      # MCP tool definitions + handlers</code></pre>
+
+        <p>The server communicates over stdio using the MCP protocol. No HTTP server, no port to manage. Your AI tool spawns it, talks to it, and that&rsquo;s the integration.</p>
+
+        <h2>Privacy First</h2>
+
+        <p>VisionMCP is read-only. It extracts and returns data with no persistence or database. Your documents are processed by Apple&rsquo;s on-device Vision Framework and the text goes straight into your AI tool&rsquo;s context. Nothing is stored, nothing is sent anywhere.</p>
+
+        <h2>Get Started</h2>
+
+        <p>Requirements: macOS 26 (Tahoe) or later, Xcode 26 beta or later, Swift 6.3+.</p>
+
+        <pre><code>git clone https://codeberg.org/breakzero/vision.mcp.git
+cd vision.mcp
+swift build -c release
+sudo ln -sf $(pwd)/.build/release/VisionMCP /usr/local/bin/visionmcp</code></pre>
+
+        <p>Then add it to your MCP config:</p>
+
+        <pre><code>{
+  "mcp": {
+    "visionmcp": {
+      "type": "local",
+      "command": ["/usr/local/bin/visionmcp"],
+      "enabled": true
+    }
+  }
+}</code></pre>
+
+        <p>VisionMCP is open source under MIT. Check it out on <a href="https://codeberg.org/breakzero/vision.mcp" target="_blank" rel="noopener">Codeberg</a> or <a href="https://github.com/br3akzero/vision.mcp" target="_blank" rel="noopener">GitHub</a>.</p>
+
+        <p><strong>Break Zero</strong></p>
+      </article>
+
+      <footer class="blog-footer">
+        <a href="/blog" class="back-link">&larr; Back to Blog</a>
+      </footer>
+    </div>
+  </body>
+</html>
