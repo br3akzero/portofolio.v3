@@ -51,6 +51,7 @@ export default defineConfig({
         'blog-opencode-claude-sub': resolve(__dirname, 'src/blog/opencode-claude-sub.html'),
         'blog-claude-code-hardening': resolve(__dirname, 'src/blog/claude-code-hardening.html'),
         'blog-f-claude': resolve(__dirname, 'src/blog/f-claude.html'),
+        'blog-visionmcp': resolve(__dirname, 'src/blog/visionmcp.html'),
       },
     },
   },
